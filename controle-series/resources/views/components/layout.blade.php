@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>{{$title}} - Controle de Séries</title>
+    <link rel="stylesheet" href="{{ asset('/css/app.cs')}}">
 </head>
 <body>
 
