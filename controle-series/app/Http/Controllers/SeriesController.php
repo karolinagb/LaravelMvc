@@ -23,6 +23,8 @@ class SeriesController extends Controller
 
         //compact pega o argumento que passamos como string e paga a variável do contexto com o mesmo nome
         //e cria um array onde a chave é a string que defini e o valor é a variável do contexto
-        return view('listar-series', compact('series'));
+        // return view('listar-series', compact('series'));
+
+        return view('listar-series')->with('series', $series);
     }
 }
