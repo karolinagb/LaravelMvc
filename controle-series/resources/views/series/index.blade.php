@@ -1,7 +1,7 @@
 {{-- podemos passar como parametro a variavel que criamos no layout --}}
 <x-layout title="Séries">
 
-<a href="/series/criar">Adicionar</a>
+<a href="/series/criar" class="btn btn-dark mb-2">Adicionar</a>
 
 {{-- slot é o que colocamos dentro da tag personalizada --}}
 <ul class="list-group">
