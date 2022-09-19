@@ -25,6 +25,7 @@ class SeriesController extends Controller
         //e cria um array onde a chave é a string que defini e o valor é a variável do contexto
         // return view('listar-series', compact('series'));
 
-        return view('listar-series')->with('series', $series);
+        //series.index = o ponto indica a separação de diretórios
+        return view('series.index')->with('series', $series);
     }
 }
