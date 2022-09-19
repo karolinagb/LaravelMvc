@@ -20,3 +20,4 @@ Route::get('/', function () {
 
 //array = primeira posição - classe controladora - segunda posição - método que deve ser executado
 Route::get('/series', [SeriesController::class, 'index']);
+Route::get('/series/criar', [SeriesController::class, 'create']);

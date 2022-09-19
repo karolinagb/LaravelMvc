@@ -13,7 +13,8 @@ class SeriesController extends Controller
         $series = [
             'A',
             'B',
-            'C'
+            'C',
+            'A > B'
         ];
 
         // return view('listar-series', [
@@ -27,5 +28,10 @@ class SeriesController extends Controller
 
         //series.index = o ponto indica a separação de diretórios
         return view('series.index')->with('series', $series);
+    }
+
+    public function create()
+    {
+        return view('series.create');
     }
 }
