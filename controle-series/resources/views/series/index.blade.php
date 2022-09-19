@@ -4,10 +4,10 @@
 <a href="/series/criar">Adicionar</a>
 
 {{-- slot é o que colocamos dentro da tag personalizada --}}
-<ul>
-@foreach ($series as $serie)
-<li>{{$serie}}</li>
-@endforeach
+<ul class="list-group">
+    @foreach ($series as $serie)
+    <li class="list-group-item">{{$serie}}</li>
+    @endforeach
 </ul>
 
 {{-- @ para o blade nao achar que é uma variavel q vou colocar pois quero apenas imprimir isso --}}
