@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Serie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,7 +13,12 @@ class SeriesController extends Controller
         //transforma em json caso eu coloque o return
         //o laravel pega o retorno e analisa a melhor forma de transformar em uma resposta
             // {{-- o laravel traz um objeto de series e n um array --}}
-        $series = DB::select('SELECT nome FROM series;');
+
+        // $series = Serie::all(); //agora estamos usando o eloquent que retorna uma collection
+
+        $series = Serie::all()->sortBy('nome'); //Eu estou criando um query builder, eu estou criando um criador de queries, e aqui
+        //nessa query eu posso fazer várias coisas
+        //o get serve para executar a query e buscar os resultados dela
 
         // return view('listar-series', [
         //     //nome da variavel que será criada na view e conteúdo a ela atribuído
@@ -37,10 +43,10 @@ class SeriesController extends Controller
         //input já faz o filter de string onde a gente não pega caracteres especiais e etc
         $nome = $request->input('nome');
 
-        if(DB::insert('insert into series (nome) values (?)', [$nome])){
-            return "Ok";
-        };
+        $serie = new Serie();
+        $serie->nome = $nome;
+        $serie->save();
 
-        return "Deu erro";
+        return redirect('/series');
     }
 }
