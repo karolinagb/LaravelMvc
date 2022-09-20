@@ -6,7 +6,8 @@
 {{-- slot é o que colocamos dentro da tag personalizada --}}
 <ul class="list-group">
     @foreach ($series as $serie)
-    <li class="list-group-item">{{$serie}}</li>
+    {{-- o laravel traz um objeto de series e n um array --}}
+    <li class="list-group-item">{{$serie->nome}}</li>
     @endforeach
 </ul>
 
