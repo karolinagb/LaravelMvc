@@ -37,7 +37,9 @@ return [
 
         'sqlite' => [
             'driver' => 'sqlite',
+            // Essa função env lê uma variável de ambiente e retorna seu valor
             'url' => env('DATABASE_URL'),
+            // Como no arquivo env eu nao estou informando um db_database, ele usa o valor default do segundo parametro
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
