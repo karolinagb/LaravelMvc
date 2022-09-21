@@ -40,12 +40,25 @@ class SeriesController extends Controller
 
     public function store(Request $request)
     {
-        //input já faz o filter de string onde a gente não pega caracteres especiais e etc
-        $nome = $request->input('nome');
+        // Serie::create($request->only(['nome'])); //pega somente o nome especificado
+        // Serie::create($request->except(['_token'])); //pega todos os dados da requisição com exceção de algum que eu definir
 
-        $serie = new Serie();
-        $serie->nome = $nome;
-        $serie->save();
+
+        //pega todos os dados da requisição = mass assignment/atribuição em massa (passar vários dados de uma vez para o modelo)
+        //método create insere no banco de dados todas as colunas que eu especificar
+        Serie::create($request->all());
+
+        //OBS: Sempre que for usar mass assigment tem que informar quais campos podem sera atribuidos dessa forma, isso é para que na insira
+        //na model, campos desnecessários
+
+        //input já faz o filter de string onde a gente não pega caracteres especiais e etc
+        // $nome = $request->input('nome');
+        //da para pegar o nome assim tb, por baixo dos panos é usado os metodos magicos do php
+            //Caso nome nao exista no corpo da requisição, o Laravel tenta buscar nos parametros da rota
+        // $nome = $request->nome;
+        // $serie = new Serie();
+        // $serie->nome = $nome;
+        // $serie->save();
 
         return redirect('/series');
     }

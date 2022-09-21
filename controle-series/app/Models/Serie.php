@@ -9,4 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Serie extends Model
 {
     use HasFactory;
+
+    //o create ignora tudo que nao esta na propriedade fillable
+    protected $fillable = ['nome']; //campos que permito ser adicionados por atribuição em massa
 }
