@@ -1,5 +1,6 @@
 <x-layout title="Nova série">
-    <form action="/series/salvar" method="post">
+    {{-- usando rotas nomeadas --}}
+    <form action="{{ route('series.store') }}" method="post">
         {{-- existe um ataque, uma falha de segurança que podemos ter em formulários que o Laravel nos obriga a
         tratar, é um de cross site request forgery, é basicamente a possibilidade de outras pessoas forjarem
         uma requisição de outro site para o meu, ou alguma coisa assim. --}}

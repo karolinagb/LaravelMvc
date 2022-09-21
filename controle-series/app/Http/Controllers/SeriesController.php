@@ -60,6 +60,10 @@ class SeriesController extends Controller
         // $serie->nome = $nome;
         // $serie->save();
 
-        return redirect('/series');
+        //posso usar as rotas nomeadas aqui
+            //formas
+        // return reredirect(route('series.index'));
+        // return to_route('series.index');
+        return redirect()->route('series.index');
     }
 }

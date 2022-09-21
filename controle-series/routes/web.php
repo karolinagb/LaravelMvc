@@ -22,14 +22,17 @@ Route::get('/', function () {
     //parametros = como o grupo de rotas inicia e o nome do controlador
     //Dessa forma ele sabe que se for o metodo create, por exemplo, deve acessar series/create
     //Para isso teriamos que alterar nossas rotas de portugues para ingles
-// Route::resource('/series', SeriesController::class)
+Route::resource('/series', SeriesController::class);
 
 //agrupando as rotas por controlador
-Route::controller(SeriesController::class)->group(function (){
-    Route::get('/series', 'index');
-    Route::get('/series/criar', 'create');
-    Route::post('/series/salvar', 'store');
-});
+// Route::controller(SeriesController::class)->group(function (){
+//     //name = informa o nome da rota, posso passar isso para a view a fim de nao ter que ficar trocando la
+//         //quando eu alterar a rota
+//         //rota nomeada é como um apelido para a rota, mas a rota continua sendo a mesma
+//     Route::get('/series', 'index')->name('series.index');
+//     Route::get('/series/create', 'create')->name('series.create');
+//     Route::post('/series/salvar', 'store')->name('series.store');
+// });
 
 //array = primeira posição - classe controladora - segunda posição - método que deve ser executado
 // Route::get('/series', [SeriesController::class, 'index']);
