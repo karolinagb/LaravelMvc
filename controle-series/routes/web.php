@@ -22,7 +22,12 @@ Route::get('/', function () {
     //parametros = como o grupo de rotas inicia e o nome do controlador
     //Dessa forma ele sabe que se for o metodo create, por exemplo, deve acessar series/create
     //Para isso teriamos que alterar nossas rotas de portugues para ingles
-Route::resource('/series', SeriesController::class);
+    //se deixar assim ele cria rotas que não estou utilizando, então com o only especificamos qual queremos
+Route::resource('/series', SeriesController::class)
+    ->only(['index', 'create',  'store']);
+
+// como temos agora uma rota chamada delete utilizando o padrão de resource controller, posso agrupar no resource acima
+Route::delete('/series/destroy/{id}', [SeriesController::class, 'destroy'])->name('series.destroy');
 
 //agrupando as rotas por controlador
 // Route::controller(SeriesController::class)->group(function (){

@@ -6,8 +6,22 @@
 {{-- slot é o que colocamos dentro da tag personalizada --}}
 <ul class="list-group">
     @foreach ($series as $serie)
-    {{-- o laravel traz um objeto de series e n um array --}}
-    <li class="list-group-item">{{$serie->nome}}</li>
+
+    <li class="list-group-item d-flex justify-content-between align-items-center">{{$serie->nome}}
+
+        {{-- o laravel traz um objeto de series e n um array --}}
+
+        <form action="{{ route('series.destroy', $serie->id) }}" method="POST">
+            @csrf
+
+            {{-- Html so trabalha com post e get, se quisermos usar outro método temos que informar assim --}}
+            {{-- Apesar de estarmos enviando um formulario com post, o php vai entender como delete e usar a rota de delete que definimos --}}
+            @method('DELETE')
+            <button class="btn btn-danger btn-sm">X</button>
+        </form>
+
+    </li>
+
     @endforeach
 </ul>
 
