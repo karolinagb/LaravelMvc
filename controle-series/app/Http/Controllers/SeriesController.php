@@ -20,6 +20,18 @@ class SeriesController extends Controller
         //nessa query eu posso fazer várias coisas
         //o get serve para executar a query e buscar os resultados dela
 
+
+        //pegando um item da sessão
+        // $mensagemSucesso = $request->session()->get('mensagem.sucesso');
+        // posso buscar direto da sessão tb com a função session:
+            //tb da para adicioanr algo a sessao com essa função session(['mensagem' => 'Teste'])
+        $mensagemSucesso = session('mensagem.sucesso');
+
+        //esquecer a mensagem / apagar
+        $request->session()->forget('mensagem.sucesso');
+
+
+
         // return view('listar-series', [
         //     //nome da variavel que será criada na view e conteúdo a ela atribuído
         //     'series' => $series
@@ -30,7 +42,7 @@ class SeriesController extends Controller
         // return view('listar-series', compact('series'));
 
         //series.index = o ponto indica a separação de diretórios
-        return view('series.index')->with('series', $series);
+        return view('series.index')->with('series', $series)->with('mensagemSucesso', $mensagemSucesso); //adicionando o dado na view
     }
 
     public function create()
@@ -60,6 +72,10 @@ class SeriesController extends Controller
         // $serie->nome = $nome;
         // $serie->save();
 
+        session(['mensagem.sucesso' => 'Série adicionada com sucesso']);
+        // define e ja apaga da sessao
+         // $request->session()->flash('mensagem.sucesso', 'Mensagem');
+
         //posso usar as rotas nomeadas aqui
             //formas
         // return reredirect(route('series.index'));
@@ -67,10 +83,15 @@ class SeriesController extends Controller
         return redirect()->route('series.index');
     }
 
+    //da para passar o id diretamente sem acesar o request
     public function destroy(Request $request)
     {
         //removendo uma série
         Serie::destroy($request->id);
+
+        //adicionar uma mensagem na sessão
+        // $request->session()->put("mensagem.sucesso", "Série removida com sucesso");
+        $request->session()->put("mensagem.sucesso", "Série removida com sucesso");
 
         return to_route('series.index');
     }

@@ -27,7 +27,7 @@ Route::resource('/series', SeriesController::class)
     ->only(['index', 'create',  'store']);
 
 // como temos agora uma rota chamada delete utilizando o padrão de resource controller, posso agrupar no resource acima
-Route::delete('/series/destroy/{id}', [SeriesController::class, 'destroy'])->name('series.destroy');
+Route::delete('/series/destroy/{id}', [SeriesController::class, 'destroy'])->name('series.destroy')->whereNumber('id'); //restrições p/ verificar se e numero
 
 //agrupando as rotas por controlador
 // Route::controller(SeriesController::class)->group(function (){
