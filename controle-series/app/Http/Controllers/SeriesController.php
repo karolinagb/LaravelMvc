@@ -58,7 +58,7 @@ class SeriesController extends Controller
 
         //pega todos os dados da requisição = mass assignment/atribuição em massa (passar vários dados de uma vez para o modelo)
         //método create insere no banco de dados todas as colunas que eu especificar
-        Serie::create($request->all());
+        $serie = Serie::create($request->all());
 
         //OBS: Sempre que for usar mass assigment tem que informar quais campos podem sera atribuidos dessa forma, isso é para que na insira
         //na model, campos desnecessários
@@ -72,7 +72,7 @@ class SeriesController extends Controller
         // $serie->nome = $nome;
         // $serie->save();
 
-        session(['mensagem.sucesso' => 'Série adicionada com sucesso']);
+        session(['mensagem.sucesso' => "Série {$serie->nome} adicionada com sucesso"]);
         // define e ja apaga da sessao
          // $request->session()->flash('mensagem.sucesso', 'Mensagem');
 
@@ -84,14 +84,19 @@ class SeriesController extends Controller
     }
 
     //da para passar o id diretamente sem acesar o request
-    public function destroy(Request $request)
+    public function destroy(int $id, Request $request)
     {
+        //Posso colocar no parametro do metodo direto o objeto Serie $serie e não ter que fazer esse find abaixo
+
+        $serie = Serie::find($id);
+
+        $serie->delete($id);
         //removendo uma série
-        Serie::destroy($request->id);
+        // Serie::destroy($request->id);
 
         //adicionar uma mensagem na sessão
         // $request->session()->put("mensagem.sucesso", "Série removida com sucesso");
-        $request->session()->put("mensagem.sucesso", "Série removida com sucesso");
+        $request->session()->put("mensagem.sucesso", "Série '{$serie->nome}' removida com sucesso");
 
         return to_route('series.index');
     }
