@@ -18,16 +18,21 @@ Route::get('/', function () {
     return redirect('/series');
 });
 
-//Porém se seguirmos o padrão de nomenclatura do Laravel, pode simplificar mais
-    //parametros = como o grupo de rotas inicia e o nome do controlador
-    //Dessa forma ele sabe que se for o metodo create, por exemplo, deve acessar series/create
-    //Para isso teriamos que alterar nossas rotas de portugues para ingles
-    //se deixar assim ele cria rotas que não estou utilizando, então com o only especificamos qual queremos
-Route::resource('/series', SeriesController::class)
-    ->only(['index', 'create',  'store']);
+
+Route::get('/series/edit/{id}', [SeriesController::class, 'edit'])->name('series.edit')->whereNumber('id');
 
 // como temos agora uma rota chamada delete utilizando o padrão de resource controller, posso agrupar no resource acima
 Route::delete('/series/destroy/{id}', [SeriesController::class, 'destroy'])->name('series.destroy')->whereNumber('id'); //restrições p/ verificar se e numero
+
+//Porém se seguirmos o padrão de nomenclatura do Laravel, pode simplificar mais
+//parametros = como o grupo de rotas inicia e o nome do controlador
+//Dessa forma ele sabe que se for o metodo create, por exemplo, deve acessar series/create
+//Para isso teriamos que alterar nossas rotas de portugues para ingles
+//se deixar assim ele cria rotas que não estou utilizando, então com o only especificamos qual queremos
+Route::resource('/series', SeriesController::class)
+->only(['index', 'create',  'store', 'update']);
+
+
 
 //agrupando as rotas por controlador
 // Route::controller(SeriesController::class)->group(function (){

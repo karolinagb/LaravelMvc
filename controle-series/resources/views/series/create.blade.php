@@ -1,6 +1,7 @@
 <x-layout title="Nova série">
+    <x-series.form action="{{ route('series.store') }}" />
     {{-- usando rotas nomeadas --}}
-    <form action="{{ route('series.store') }}" method="post">
+    {{-- <form action="{{ route('series.store') }}" method="post"> --}}
         {{-- existe um ataque, uma falha de segurança que podemos ter em formulários que o Laravel nos obriga a
         tratar, é um de cross site request forgery, é basicamente a possibilidade de outras pessoas forjarem
         uma requisição de outro site para o meu, ou alguma coisa assim. --}}
@@ -11,11 +12,11 @@
         informação realmente foi enviada por esse formulário e não de algum outro lugar, então embora a solução pareça
         complexa, para corrigirmos basta no nosso formulário adicionar @csrf, essa diretiva do blade, ele já cuida de
         todos os detalhes para nós. --}}
-        @csrf
+        {{-- @csrf
         <div class="mb-3">
             <label for="nome" class="form-label">Nome:</label>
             <input type="text" id=”nome” name="nome" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Adicionar</button>
-    </form>
+    </form> --}}
 </x-layout>

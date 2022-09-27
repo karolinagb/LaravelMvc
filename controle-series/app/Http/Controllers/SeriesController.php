@@ -72,7 +72,7 @@ class SeriesController extends Controller
         // $serie->nome = $nome;
         // $serie->save();
 
-        session(['mensagem.sucesso' => "Série {$serie->nome} adicionada com sucesso"]);
+        // session(['mensagem.sucesso' => "Série {$serie->nome} adicionada com sucesso"]);
         // define e ja apaga da sessao
          // $request->session()->flash('mensagem.sucesso', 'Mensagem');
 
@@ -80,13 +80,14 @@ class SeriesController extends Controller
             //formas
         // return reredirect(route('series.index'));
         // return to_route('series.index');
-        return redirect()->route('series.index');
+        return redirect()->route('series.index')->with('mensagem.sucesso',"Série {$serie->nome} adicionada com sucesso");
     }
 
     //da para passar o id diretamente sem acesar o request
     public function destroy(int $id, Request $request)
     {
         //Posso colocar no parametro do metodo direto o objeto Serie $serie e não ter que fazer esse find abaixo
+        //O Laravel já encontra essa model no banco pra gente
 
         $serie = Serie::find($id);
 
@@ -96,8 +97,32 @@ class SeriesController extends Controller
 
         //adicionar uma mensagem na sessão
         // $request->session()->put("mensagem.sucesso", "Série removida com sucesso");
-        $request->session()->put("mensagem.sucesso", "Série '{$serie->nome}' removida com sucesso");
+        // $request->session()->put("mensagem.sucesso", "Série '{$serie->nome}' removida com sucesso");
 
-        return to_route('series.index');
+        //with permite retornar com um dado na flash session
+        //assim posso passar minha flash message diretamente aqui
+        return to_route('series.index')
+        ->with("mensagem.sucesso", "Série '{$serie->nome}' removida com sucesso");
+    }
+
+    public function edit(int $id)
+    {
+        $serie = Serie::find($id);
+        return view('series.edit')->with('serie', $serie);
+    }
+
+    public function update(Serie $serie, Request $request)
+    {
+        //Poderiamos fazer como abaixo mas quando passamos o id na rota e no parametro do controller passamos
+            //o tipo do modelo, o Laravel já busca no banco pra gente
+        //$serie = Serie::find($id);
+
+        // $serie->nome = $request->nome;
+        //Se fosse muitos parâmetros podemos usar o fill, pois definimos na model quais campos podem ser atribuidos
+            //o fill vai fazer a atribuição em massa de td q vier do request mas definido na model
+        $serie->fill($request->all());
+        $serie->save();
+
+        return redirect()->route('series.index')->with("mensagem.sucesso", "Série '{$serie->nome}' atualizada com sucesso");;
     }
 }
