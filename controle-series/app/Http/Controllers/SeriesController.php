@@ -116,6 +116,7 @@ class SeriesController extends Controller
     public function edit(int $id)
     {
         $serie = Serie::find($id);
+
         return view('series.edit')->with('serie', $serie);
     }
 
