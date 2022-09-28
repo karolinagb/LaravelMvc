@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Serie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\SerieFormRequest;
 
 class SeriesController extends Controller
 {
@@ -50,13 +51,14 @@ class SeriesController extends Controller
         return view('series.create');
     }
 
-    public function store(Request $request)
+    public function store(SerieFormRequest $request)
     {
         //esse método espera algumas regras, se essas não forem satisfeitas o laravel redireciona o usuário de volta para ultima url
             //e adiciona todas as informações do request que não foi válido em uma flash message
-        $request->validate([
-            'nome' => ['required', 'min:3']
-        ]);
+        // $request->validate([
+        //     'nome' => ['required', 'min:3']
+        // ]);
+        //Já temos a validação embutida quando passamos como parâmetro o nosso Request customizado ao invés do padrão
 
         // Serie::create($request->only(['nome'])); //pega somente o nome especificado
         // Serie::create($request->except(['_token'])); //pega todos os dados da requisição com exceção de algum que eu definir
@@ -117,7 +119,7 @@ class SeriesController extends Controller
         return view('series.edit')->with('serie', $serie);
     }
 
-    public function update(Serie $serie, Request $request)
+    public function update(Serie $serie, SerieFormRequest $request)
     {
         //Poderiamos fazer como abaixo mas quando passamos o id na rota e no parametro do controller passamos
             //o tipo do modelo, o Laravel já busca no banco pra gente
