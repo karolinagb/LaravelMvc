@@ -32,16 +32,16 @@ class SerieFormRequest extends FormRequest
 
     //podemos usar esse método para personalizar nossas mensagens ou simplesmente traduzir as mensagens q vem do framework
         //diretamente no arquivo de validation em inglês ou traduzir o sistema todo
-    public function messages()
-    {
-        //retorna um array com todas as mensagens que eu posso utilizar
-        return[
-            //mensagem para a condição de required do nome
-            'nome.required' => 'O campo nome é obrigatório',
-            //:min é o valor da validação para min
-            'nome.min' => 'O campo nome precisa de pelo menos :min caracteres'
-            //definir mensagem para todas as validações relacionadas a nome
-            //'nome.*' => 'mensagem'
-        ];
-    }
+    // public function messages()
+    // {
+    //     //retorna um array com todas as mensagens que eu posso utilizar
+    //     return[
+    //         //mensagem para a condição de required do nome
+    //         'nome.required' => 'O campo nome é obrigatório',
+    //         //:min é o valor da validação para min
+    //         'nome.min' => 'O campo nome precisa de pelo menos :min caracteres'
+    //         //definir mensagem para todas as validações relacionadas a nome
+    //         //'nome.*' => 'mensagem'
+    //     ];
+    // }
 }
