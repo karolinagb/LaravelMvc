@@ -52,6 +52,12 @@ class SeriesController extends Controller
 
     public function store(Request $request)
     {
+        //esse método espera algumas regras, se essas não forem satisfeitas o laravel redireciona o usuário de volta para ultima url
+            //e adiciona todas as informações do request que não foi válido em uma flash message
+        $request->validate([
+            'nome' => ['required', 'min:3']
+        ]);
+
         // Serie::create($request->only(['nome'])); //pega somente o nome especificado
         // Serie::create($request->except(['_token'])); //pega todos os dados da requisição com exceção de algum que eu definir
 

@@ -1,5 +1,8 @@
 <x-layout title="Nova série">
-    <x-series.form action="{{ route('series.store') }}" />
+    <x-series.form action="{{ route('series.store') }}"
+    {{-- old() - pega da minha flash session a requisição anterior que foi adicionada pela validação --}}
+        :nome="old('nome')" :update="false"/>
+
     {{-- usando rotas nomeadas --}}
     {{-- <form action="{{ route('series.store') }}" method="post"> --}}
         {{-- existe um ataque, uma falha de segurança que podemos ter em formulários que o Laravel nos obriga a
