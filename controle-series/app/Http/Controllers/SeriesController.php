@@ -117,6 +117,12 @@ class SeriesController extends Controller
     {
         $serie = Serie::find($id);
 
+        //se eu acessar metodo temporadas(), ao invés de propriedade temporadas, tenho acesso ao relacionamento
+            //se eu tenho acesso ao relacionamento eu consigo modificar a query por exemplo, teria um query builder p/
+                //filtrar e depois pegar a coleção (exemplo: temporadas()->with)
+            //se eu acessar através da propriedade, eu já pego a coleção de temporadas
+        // dd($serie->temporadas());
+
         return view('series.edit')->with('serie', $serie);
     }
 

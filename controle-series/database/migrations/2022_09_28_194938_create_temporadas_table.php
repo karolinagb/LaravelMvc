@@ -15,6 +15,17 @@ return new class extends Migration
     {
         Schema::create('temporadas', function (Blueprint $table) {
             $table->id();
+            //unsignedTinyInteger = inteiro pequeno e positivo
+            $table->unsignedTinyInteger('numero');
+
+            //unsignedBigInteger = inteiro maior e positivo
+            // $table->unsignedBigInteger('serie_id') //1;
+
+            //chave estrangeira, que referencia a coluna id da tabela series
+            // $table->foreign('series_id')->references('id')->on('series'); //2
+
+            //a linha 1 e 2 comentada acima também pode ser substituída por:
+            $table->foreignId('serie_id')->constrained();
             $table->timestamps();
         });
     }

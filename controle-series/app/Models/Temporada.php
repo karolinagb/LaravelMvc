@@ -11,7 +11,6 @@ class Temporada extends Model
 
     public function serie()
     {
-        // return $this->hasOne(Serie::class);
         return $this->belongsTo(Serie::class); //pertence a uma serie
     }
 
