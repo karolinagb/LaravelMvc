@@ -15,9 +15,15 @@ class SeriesController extends Controller
         //o laravel pega o retorno e analisa a melhor forma de transformar em uma resposta
             // {{-- o laravel traz um objeto de series e n um array --}}
 
-        // $series = Serie::all(); //agora estamos usando o eloquent que retorna uma collection
+        $series = Serie::all(); //agora estamos usando o eloquent que retorna uma collection
 
-        $series = Serie::all()->sortBy('nome'); //Eu estou criando um query builder, eu estou criando um criador de queries, e aqui
+        //Laravel faz laze loading, nao carrega de uma vez as temporadas da serie, busca conforme eu precise
+        //posso mudar isso com o with e definir que quero trazer o relacionamentos de temporadas que definimos tb
+        // $series = Serie::with(['temporadas'])->get();
+        // Se isso acima for um padrão e todo lugar que eu buscar as Series eu precise das temporadas, posso definir isso na model com o
+            //parametro with
+
+        // $series = Serie::all()->sortBy('nome'); //Eu estou criando um query builder, eu estou criando um criador de queries, e aqui
         //nessa query eu posso fazer várias coisas
         //o get serve para executar a query e buscar os resultados dela
 
