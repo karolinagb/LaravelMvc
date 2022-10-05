@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('epsodios', function (Blueprint $table) {
             $table->id();
             $table->unsignedTinyInteger('numero');
-            $table->foreignId('temporada_id')->constrained();
+            $table->foreignId('temporada_id')->constrained()->onDelete('cascade');
             // $table->timestamps();
         });
     }

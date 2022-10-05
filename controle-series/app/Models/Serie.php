@@ -15,7 +15,7 @@ class Serie extends Model
     protected $fillable = ['nome']; //campos que permito ser adicionados por atribuição em massa
     // protected $primaryKey = 'id'; -> definir primary key, o padrão já é o campo id
 
-    //Sempre que eu buscar series, vai vir as temporadas
+    //Sempre que eu buscar series, vai vir as temporadas - eager loading
     // protected $with = ['temporadas'];
 
     //Não criamos uma propriedade para o relacionamento mas sim um método
