@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Epsodio extends Model
 {
     use HasFactory;
+    protected $fillable = ['numero'];
 
     public $timestamps = false; //informar que timestamp não será utilizado
 

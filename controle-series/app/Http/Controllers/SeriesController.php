@@ -74,6 +74,20 @@ class SeriesController extends Controller
         //método create insere no banco de dados todas as colunas que eu especificar
         $serie = Serie::create($request->all());
 
+        for($i = 1; $i <= $request->quantTemporadas; $i++){
+            //usando o relacionamento para criar temporadas
+                //poderia fazer temporada::create, mas ia ter que ficar informando a chave estrangeira do relacionamento
+                //temporadas() pega o relacionamento, propriedade temporadas pega a coleção de temporadas
+            $temporada = $serie->temporadas()->create([
+                'numero' => $i
+            ]);
+
+            for($j = 1; $j <= $request->epsodios; $j++)
+            $temporada->epsodios()->create([
+                'numero' => $j
+            ]);
+        }
+
         //OBS: Sempre que for usar mass assigment tem que informar quais campos podem sera atribuidos dessa forma, isso é para que na insira
         //na model, campos desnecessários
 
