@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Serie;
+use App\Models\Temporada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SerieFormRequest;
+use App\Models\Epsodio;
 
 class SeriesController extends Controller
 {
@@ -73,6 +75,38 @@ class SeriesController extends Controller
         //pega todos os dados da requisição = mass assignment/atribuição em massa (passar vários dados de uma vez para o modelo)
         //método create insere no banco de dados todas as colunas que eu especificar
         $serie = Serie::create($request->all());
+
+        $temporadas = [];
+        for($i = 1; $i <= $request->quantTemporadas; $i++){
+            //usando o relacionamento para criar temporadas
+                //poderia fazer temporada::create, mas ia ter que ficar informando a chave estrangeira do relacionamento
+                //temporadas() pega o relacionamento, propriedade temporadas pega a coleção de temporadas
+
+            //Esse codigo gera uma query para cada inserção
+                //Vamos criar um array primeiro e adicionar as temporadas nele
+            //     $temporada = $serie->temporadas()->create([
+            //     'numero' => $i
+            // ]);
+            $temporadas[] = [
+                //nesse caso não dá para usar o relacionamento para não ter que colocar chave estrangeira
+                'serie_id' => $serie->id,
+                'numero' => $i
+            ];
+        }
+
+        Temporada::insert($temporadas); //posso passar um array para o insert ao invés do sql
+
+        $epsodios = [];
+        foreach ($serie->temporadas as $temporada) {
+            for($j = 1; $j <= $request->epsodios; $j++){
+                $epsodios[] = [
+                    'temporada_id' => $temporada->id,
+                    'numero' => $j
+                ];
+            }
+        }
+
+        Epsodio::insert($epsodios);
 
         //OBS: Sempre que for usar mass assigment tem que informar quais campos podem sera atribuidos dessa forma, isso é para que na insira
         //na model, campos desnecessários

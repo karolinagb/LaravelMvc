@@ -25,7 +25,8 @@ return new class extends Migration
             // $table->foreign('series_id')->references('id')->on('series'); //2
 
             //a linha 1 e 2 comentada acima também pode ser substituída por:
-            $table->foreignId('serie_id')->constrained();
+                //cascade= quando eu deletar uma serie, eu tb vou deletar suas temporadas
+            $table->foreignId('serie_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
