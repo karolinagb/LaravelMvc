@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SeriesController;
+use App\Http\Controllers\TemporadasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,7 +33,7 @@ Route::delete('/series/destroy/{id}', [SeriesController::class, 'destroy'])->nam
 Route::resource('/series', SeriesController::class)
 ->only(['index', 'create',  'store', 'update']);
 
-
+Route::get('/series/{id}/temporadas', [TemporadasController::class, 'index'])->name('temporadas.index');
 
 //agrupando as rotas por controlador
 // Route::controller(SeriesController::class)->group(function (){
