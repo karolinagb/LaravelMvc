@@ -61,7 +61,9 @@ class SeriesController extends Controller
 
     public function store(SerieFormRequest $request)
     {
-        //esse método espera algumas regras, se essas não forem satisfeitas o laravel redireciona o usuário de volta para ultima url
+        $serie = null;
+        DB::transaction(function () use ($request, &$serie) {
+            //esse método espera algumas regras, se essas não forem satisfeitas o laravel redireciona o usuário de volta para ultima url
             //e adiciona todas as informações do request que não foi válido em uma flash message
         // $request->validate([
         //     'nome' => ['required', 'min:3']
@@ -128,6 +130,9 @@ class SeriesController extends Controller
             //formas
         // return reredirect(route('series.index'));
         // return to_route('series.index');
+        });
+
+
         return redirect()->route('series.index')->with('mensagem.sucesso',"Série {$serie->nome} adicionada com sucesso");
     }
 
