@@ -61,8 +61,7 @@ class SeriesController extends Controller
 
     public function store(SerieFormRequest $request)
     {
-        $serie = null;
-        DB::transaction(function () use ($request, &$serie) {
+        $serie = DB::transaction(function () use ($request) {
             //esse método espera algumas regras, se essas não forem satisfeitas o laravel redireciona o usuário de volta para ultima url
             //e adiciona todas as informações do request que não foi válido em uma flash message
         // $request->validate([
@@ -98,6 +97,7 @@ class SeriesController extends Controller
 
         Temporada::insert($temporadas); //posso passar um array para o insert ao invés do sql
 
+
         $epsodios = [];
         foreach ($serie->temporadas as $temporada) {
             for($j = 1; $j <= $request->epsodios; $j++){
@@ -109,6 +109,11 @@ class SeriesController extends Controller
         }
 
         Epsodio::insert($epsodios);
+
+        return $serie;
+
+        }); // 2 parâmetro (número de tentativas) = Tenta executar 5 vezes a transação em caso de deadlock
+            //Isso é importante caso usemos uma transação que depende das mesmas tabelas da primeira transação
 
         //OBS: Sempre que for usar mass assigment tem que informar quais campos podem sera atribuidos dessa forma, isso é para que na insira
         //na model, campos desnecessários
@@ -130,8 +135,6 @@ class SeriesController extends Controller
             //formas
         // return reredirect(route('series.index'));
         // return to_route('series.index');
-        });
-
 
         return redirect()->route('series.index')->with('mensagem.sucesso',"Série {$serie->nome} adicionada com sucesso");
     }
