@@ -9,12 +9,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\SerieRepository;
 use App\Http\Requests\SerieFormRequest;
+use App\Repositories;
 
 class SeriesController extends Controller
 {
-    private readonly SerieRepository $serieRepository;
+    private readonly ISerieRepository $serieRepository;
 
-    public function __construct(SerieRepository $serieRepository)
+    //inversão de dependência = ao invés de depende de algo concreto, dependemos de uma abstração
+    public function __construct(ISerieRepository $serieRepository)
     {
         $this->serieRepository = $serieRepository;
     }

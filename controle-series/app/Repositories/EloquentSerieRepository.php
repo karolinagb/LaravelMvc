@@ -7,7 +7,7 @@ use App\Models\Temporada;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SerieFormRequest;
 
-class SerieRepository
+class EloquentSerieRepository implements ISerieRepository
 {
     public function add(SerieFormRequest $request): Serie
     {
