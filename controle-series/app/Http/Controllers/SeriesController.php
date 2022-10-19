@@ -3,14 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Serie;
+use App\Models\Epsodio;
 use App\Models\Temporada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\SerieRepository;
 use App\Http\Requests\SerieFormRequest;
-use App\Models\Epsodio;
 
 class SeriesController extends Controller
 {
+    private readonly SerieRepository $serieRepository;
+
+    public function __construct(SerieRepository $serieRepository)
+    {
+        $this->serieRepository = $serieRepository;
+    }
+
+    //outra sintaxe do controlador:
+    // public function __construct(private readonly SerieRepository $serieRepository)
+    // {
+    // }
+
+
     public function index(Request $request)
     {
         //transforma em json caso eu coloque o return
@@ -61,7 +75,7 @@ class SeriesController extends Controller
 
     public function store(SerieFormRequest $request)
     {
-        $serie = DB::transaction(function () use ($request) {
+
             //esse método espera algumas regras, se essas não forem satisfeitas o laravel redireciona o usuário de volta para ultima url
             //e adiciona todas as informações do request que não foi válido em uma flash message
         // $request->validate([
@@ -75,45 +89,6 @@ class SeriesController extends Controller
 
         //pega todos os dados da requisição = mass assignment/atribuição em massa (passar vários dados de uma vez para o modelo)
         //método create insere no banco de dados todas as colunas que eu especificar
-        $serie = Serie::create($request->all());
-
-        $temporadas = [];
-        for($i = 1; $i <= $request->quantTemporadas; $i++){
-            //usando o relacionamento para criar temporadas
-                //poderia fazer temporada::create, mas ia ter que ficar informando a chave estrangeira do relacionamento
-                //temporadas() pega o relacionamento, propriedade temporadas pega a coleção de temporadas
-
-            //Esse codigo gera uma query para cada inserção
-                //Vamos criar um array primeiro e adicionar as temporadas nele
-            //     $temporada = $serie->temporadas()->create([
-            //     'numero' => $i
-            // ]);
-            $temporadas[] = [
-                //nesse caso não dá para usar o relacionamento para não ter que colocar chave estrangeira
-                'serie_id' => $serie->id,
-                'numero' => $i
-            ];
-        }
-
-        Temporada::insert($temporadas); //posso passar um array para o insert ao invés do sql
-
-
-        $epsodios = [];
-        foreach ($serie->temporadas as $temporada) {
-            for($j = 1; $j <= $request->epsodios; $j++){
-                $epsodios[] = [
-                    'temporada_id' => $temporada->id,
-                    'numero' => $j
-                ];
-            }
-        }
-
-        Epsodio::insert($epsodios);
-
-        return $serie;
-
-        }); // 2 parâmetro (número de tentativas) = Tenta executar 5 vezes a transação em caso de deadlock
-            //Isso é importante caso usemos uma transação que depende das mesmas tabelas da primeira transação
 
         //OBS: Sempre que for usar mass assigment tem que informar quais campos podem sera atribuidos dessa forma, isso é para que na insira
         //na model, campos desnecessários
@@ -135,6 +110,8 @@ class SeriesController extends Controller
             //formas
         // return reredirect(route('series.index'));
         // return to_route('series.index');
+
+        $serie = $this->serieRepository->add($request);
 
         return redirect()->route('series.index')->with('mensagem.sucesso',"Série {$serie->nome} adicionada com sucesso");
     }
