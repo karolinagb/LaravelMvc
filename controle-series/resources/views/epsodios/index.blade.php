@@ -1,6 +1,6 @@
 <x-layout title="Epsodios">
 
-<form method="post">
+<form method="post" action="{{ route('epsodios.update', $idTemporada)}}">
     @csrf
     <ul class="list-group">
         @foreach ($epsodios as $epsodio)
@@ -9,7 +9,8 @@
             Epsodio {{$epsodio->numero}}
 
             {{-- name="epsodios[]" - vira um array quando chega no controlador --}}
-            <input type="checkbox" name="epsodios[]" value="{{ $epsodio->id }}">
+            <input type="checkbox" name="epsodios[]" value="{{ $epsodio->id }}"
+            @if ($epsodio->assistido) checked @endif />
         </li>
         @endforeach
 
