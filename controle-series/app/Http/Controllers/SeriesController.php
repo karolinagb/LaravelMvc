@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Serie;
+use App\Repositories;
 use App\Models\Epsodio;
 use App\Models\Temporada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\SerieRepository;
+use App\Repositories\ISerieRepository;
 use App\Http\Requests\SerieFormRequest;
-use App\Repositories;
 
 class SeriesController extends Controller
 {
