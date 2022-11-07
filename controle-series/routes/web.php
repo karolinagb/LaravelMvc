@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\SeriesController;
-use App\Http\Controllers\TemporadasController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SeriesController;
+use App\Http\Controllers\EpsodiosController;
+use App\Http\Controllers\TemporadasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +51,8 @@ Route::get('/series/{id}/temporadas', [TemporadasController::class, 'index'])->n
 // Route::get('/series', [SeriesController::class, 'index']);
 // Route::get('/series/criar', [SeriesController::class, 'create']);
 // Route::post('/series/salvar', [SeriesController::class, 'store']);
+
+Route::get('/temporadas/{id}/epsodios', [EpsodiosController::class, 'index'])->name('epsodios.index');
+Route::post('/temporadas/{id}/epsodios', function(Request $request){
+    dd($request->all());
+});

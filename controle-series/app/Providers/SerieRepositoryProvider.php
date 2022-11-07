@@ -6,7 +6,7 @@ use App\Repositories\ISerieRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\EloquentSerieRepository;
 
-class SerieRepositoriesProvider extends ServiceProvider
+class SerieRepositoryProvider extends ServiceProvider
 {
     /**
      * Register services.
