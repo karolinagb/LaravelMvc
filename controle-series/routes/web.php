@@ -53,4 +53,4 @@ Route::get('/series/{id}/temporadas', [TemporadasController::class, 'index'])->n
 // Route::post('/series/salvar', [SeriesController::class, 'store']);
 
 Route::get('/temporadas/{id}/epsodios', [EpsodiosController::class, 'index'])->name('epsodios.index');
-Route::post('/temporadas/{id}/epsodios/update', [EpsodiosController::class, 'update'])->name('epsodios.update');
+Route::post('/temporadas/{temporada}/epsodios/update', [EpsodiosController::class, 'update'])->name('epsodios.update');

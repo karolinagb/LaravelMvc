@@ -14,9 +14,9 @@ class EpsodiosController
         return view('epsodios.index', ['epsodios' => $temporada->epsodios, 'idTemporada' => $id]);
     }
 
-    public function update(Request $request, int $id)
+    public function update(Request $request, Temporada $temporada)
     {
-        $temporada = Temporada::find($id);
+        // $temporada = Temporada::find($id);
 
         $epsodiosAssistidos = $request->epsodios;
 
