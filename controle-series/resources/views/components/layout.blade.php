@@ -10,6 +10,12 @@
 
     <h1>{{$title}}</h1>
 
+    @isset($mensagemSucesso)
+    <div class="alert alert-success">
+        {{ $mensagemSucesso }}
+    </div>
+    @endisset
+
      {{-- esssa variavel errors é criada pelo laravel sempre que tem algum erro na requisição --}}
      @if ($errors->any())
      <div class="alert alert-danger">

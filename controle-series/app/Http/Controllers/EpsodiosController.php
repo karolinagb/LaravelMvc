@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Epsodio;
 use App\Models\Temporada;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EpsodiosController
 {
@@ -11,12 +12,19 @@ class EpsodiosController
     {
         $temporada = Temporada::find($id);
 
-        return view('epsodios.index', ['epsodios' => $temporada->epsodios, 'idTemporada' => $id]);
+                return view('epsodios.index',
+                [
+                    'epsodios' => $temporada->epsodios,
+                    'idTemporada' => $id,
+                    'mensagemSucesso' => session('mensagem.sucesso')
+                ]);
     }
 
     public function update(Request $request, Temporada $temporada)
     {
         // $temporada = Temporada::find($id);
+
+        DB::beginTransaction();
 
         $epsodiosAssistidos = $request->epsodios;
 
@@ -30,8 +38,12 @@ class EpsodiosController
             $epsodio->assistido = in_array($epsodio->id, $epsodiosAssistidos);
         });
 
+
         $temporada->push(); //salva as alterações da model atual e seus relacionamentos
 
-        return to_route('epsodios.index', $temporada->id);
+        DB::commit();
+
+        return to_route('epsodios.index', $temporada->id)
+        ->with('mensagem.sucesso', 'Epsódios marcados como assistidos');
     }
 }

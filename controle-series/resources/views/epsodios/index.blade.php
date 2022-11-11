@@ -1,4 +1,4 @@
-<x-layout title="Epsodios">
+<x-layout title="Epsodios" :mensagem-sucesso="$mensagemSucesso">
 
 <form method="post" action="{{ route('epsodios.update', $idTemporada)}}">
     @csrf

@@ -1,13 +1,7 @@
 {{-- podemos passar como parametro a variavel que criamos no layout --}}
-<x-layout title="Séries">
+<x-layout title="Séries" :mensagem-sucesso="$mensagemSucesso">
 
 <a href="{{ route('series.create') }}" class="btn btn-dark mb-2">Adicionar</a>
-
-@isset($mensagemSucesso)
-    <div class="alert alert-success">
-        {{ $mensagemSucesso }}
-    </div>
-@endisset
 
 {{-- slot é o que colocamos dentro da tag personalizada --}}
 <ul class="list-group">
