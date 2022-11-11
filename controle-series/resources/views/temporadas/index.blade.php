@@ -11,8 +11,12 @@
             {{-- o laravel traz um objeto de series e n um array --}}
 
             <span class="badge bg-secondary">
-               {{ $temporada->epsodios->count() }}
+                {{ $temporada->numeroDeEpsodiosAssistidos() }} / {{ $temporada->epsodios->count() }}
             </span>
+            {{-- <span class="badge bg-secondary">
+                {{ $temporada->epsodios()->assistido()->count() }}
+                {{ $temporada->epsodios->filter(fn ($epsodio) => $epsodio->assistido)->count() }}
+             </span> --}}
         </li>
         @endforeach
     </ul>
