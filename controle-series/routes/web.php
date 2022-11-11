@@ -1,11 +1,13 @@
 <?php
 
+
 use Illuminate\Http\Request;
+use App\Http\Middleware\Autenticador;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\EpsodiosController;
 use App\Http\Controllers\TemporadasController;
-use App\Http\Middleware\Autenticador;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +57,6 @@ Route::get('/series/{id}/temporadas', [TemporadasController::class, 'index'])->n
 
 Route::get('/temporadas/{id}/epsodios', [EpsodiosController::class, 'index'])->name('epsodios.index');
 Route::post('/temporadas/{temporada}/epsodios/update', [EpsodiosController::class, 'update'])->name('epsodios.update');
+
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'store'])->name('entrar');
