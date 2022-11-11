@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\EpsodiosController;
 use App\Http\Controllers\TemporadasController;
+use App\Http\Middleware\Autenticador;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ use App\Http\Controllers\TemporadasController;
 
 Route::get('/', function () {
     return redirect('/series');
-});
+})->middleware(Autenticador::class);
 
 
 Route::get('/series/edit/{id}', [SeriesController::class, 'edit'])->name('series.edit')->whereNumber('id');
