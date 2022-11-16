@@ -1,12 +1,12 @@
 <?php
 
 
-use Illuminate\Http\Request;
 use App\Http\Middleware\Autenticador;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\EpsodiosController;
+use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\TemporadasController;
 
 /*
@@ -60,3 +60,8 @@ Route::post('/temporadas/{temporada}/epsodios/update', [EpsodiosController::clas
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('entrar');
+
+Route::get('/registrar', [UsuariosController::class, 'create'])->name('usuarios.create');
+Route::post('/registrar', [UsuariosController::class, 'store'])->name('usuarios.store');
+
+Route::get('/logout', [LoginController::class, 'destroy'])->name('usuarios.logout');

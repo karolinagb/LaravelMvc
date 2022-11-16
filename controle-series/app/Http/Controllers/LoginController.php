@@ -17,11 +17,20 @@ class LoginController
             //oferece um subsistema pra gente de autenticação nesse caso
         //attempt = tenta buscar o usuário, se esse usuário for encontrado, tenta realizar o login dele
             //verificando se a senha em hash está correta. Se tudo estiver correto ele já armazena o usuário em sessão.
-        if(!Auth::attempt($request->all()))
+        if(!Auth::attempt($request->only(['email', 'password']))) //nao pode ser all pq ele vai tentar verificar o token csrf
         {
             //back = redireciona de volta para a ultima rota
             return redirect()->back()->withErrors(['Usuário com e-mail ou senha inválidos']);
             // return redirect('entrar');
         }
+
+        return to_route('series.index');
+    }
+
+    public function destroy()
+    {
+        Auth::logout();
+
+        return to_route('login');
     }
 }
