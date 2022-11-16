@@ -1,7 +1,9 @@
 {{-- podemos passar como parametro a variavel que criamos no layout --}}
 <x-layout title="Séries" :mensagem-sucesso="$mensagemSucesso">
 
-<a href="{{ route('series.create') }}" class="btn btn-dark mb-2">Adicionar</a>
+@auth
+    <a href="{{ route('series.create') }}" class="btn btn-dark mb-2">Adicionar</a>
+@endauth
 
 {{-- slot é o que colocamos dentro da tag personalizada --}}
 <ul class="list-group">
@@ -12,18 +14,20 @@
 
         {{-- o laravel traz um objeto de series e n um array --}}
 
-        <span class="d-flex">
-            <a href="{{ route('series.edit', $serie->id) }}" class="btn btn-primary btn-sm">E</a>
-            {{-- Para exclusao usamos o form pois precisamos de um POST para excluir e não de um get que é oq o link a faz --}}
-            <form action="{{ route('series.destroy', $serie->id) }}" method="POST" class="ms-2">
-                @csrf
+        @auth
+            <span class="d-flex">
+                <a href="{{ route('series.edit', $serie->id) }}" class="btn btn-primary btn-sm">E</a>
+                {{-- Para exclusao usamos o form pois precisamos de um POST para excluir e não de um get que é oq o link a faz --}}
+                <form action="{{ route('series.destroy', $serie->id) }}" method="POST" class="ms-2">
+                    @csrf
 
-                {{-- Html so trabalha com post e get, se quisermos usar outro método temos que informar assim --}}
-                {{-- Apesar de estarmos enviando um formulario com post, o php vai entender como delete e usar a rota de delete que definimos --}}
-                @method('DELETE')
-                <button class="btn btn-danger btn-sm">X</button>
-            </form>
-        </span>
+                    {{-- Html so trabalha com post e get, se quisermos usar outro método temos que informar assim --}}
+                    {{-- Apesar de estarmos enviando um formulario com post, o php vai entender como delete e usar a rota de delete que definimos --}}
+                    @method('DELETE')
+                    <button class="btn btn-danger btn-sm">X</button>
+                </form>
+            </span>
+        @endauth
     </li>
 
     @endforeach
