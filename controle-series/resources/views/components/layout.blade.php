@@ -10,7 +10,16 @@
     <div class="container-fluid">
         <a href="{{ route('series.index') }}" class="navbar-brand">Home</a>
 
-        <a href="{{ route('usuarios.logout') }}">Sair</a>
+        {{-- diretiva do blade para verificar se existe usuário autenticado --}}
+        @auth
+        {{-- se o usuario n estiver autenticado, não é mostrado o botão --}}
+            <a href="{{ route('usuarios.logout') }}">Sair</a>
+        @endauth
+
+        @guest
+            {{-- Será exibido caso não tenha usuário logado --}}
+            <a href="{{ route('login') }}">Entrar</a>
+        @endguest
     </div>
 </nav>
 

@@ -25,7 +25,10 @@ class UsuariosController
         $user = User::create($dados);
         // dd($dados['senha']);
         //tornar usuário logado de uma vez
-        Auth::login($user);
+        Auth::login($user); //da pra logar através do método attempt tb
+
+        //traz o usuário que está logado / armazenado na sessão
+        // Auth::user();
 
         return to_route('series.index');
     }
