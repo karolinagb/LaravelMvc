@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\Autenticador;
 use App\Models\Serie;
 use App\Repositories;
 use App\Models\Epsodio;
@@ -22,6 +23,10 @@ class SeriesController extends Controller
     public function __construct(ISerieRepository $serieRepository)
     {
         $this->serieRepository = $serieRepository;
+
+        // Para aplicar um middleware a todos os métodos do controller, posso usar o método middleware
+            //except - o middleware não será aplicado para o método index
+        $this->middleware(Autenticador::class)->except('index');
     }
 
     //outra sintaxe do controlador:
@@ -32,6 +37,9 @@ class SeriesController extends Controller
 
     public function index(Request $request)
     {
+        //Verifica se o usuário está logado (retorna verdadeiro ou falso)
+        //Auth::check();
+
         //transforma em json caso eu coloque o return
         //o laravel pega o retorno e analisa a melhor forma de transformar em uma resposta
             // {{-- o laravel traz um objeto de series e n um array --}}

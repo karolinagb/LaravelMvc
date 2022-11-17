@@ -38,7 +38,9 @@ Route::delete('/series/destroy/{id}', [SeriesController::class, 'destroy'])->nam
 Route::resource('/series', SeriesController::class)
 ->only(['index', 'create',  'store', 'update']);
 
-Route::get('/series/{id}/temporadas', [TemporadasController::class, 'index'])->name('temporadas.index');
+Route::get('/series/{id}/temporadas', [TemporadasController::class, 'index'])
+    ->name('temporadas.index')
+    ->middleware('autenticador');
 
 //agrupando as rotas por controlador
 // Route::controller(SeriesController::class)->group(function (){

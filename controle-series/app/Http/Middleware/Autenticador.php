@@ -23,6 +23,7 @@ class Autenticador
         //se eu quiser, posso receber oq vai ser retornado de next e tratar a resposta tb
 
         if(!Auth::check()){
+            // Se for lançada uma exceção de autenticação, o Laravel redireciona pro login
             throw new AuthenticationException();
         }
 
