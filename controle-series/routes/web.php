@@ -20,9 +20,20 @@ use App\Http\Controllers\TemporadasController;
 |
 */
 
-Route::get('/', function () {
-    return redirect('/series');
-})->middleware(Autenticador::class);
+Route::middleware('autenticador')->group(function ()
+{
+    Route::get('/', function () {
+        return redirect('/series');
+    })->middleware(Autenticador::class);
+
+    Route::get('/series/{id}/temporadas', [TemporadasController::class, 'index'])
+    ->name('temporadas.index');
+
+    Route::get('/temporadas/{id}/epsodios', [EpsodiosController::class, 'index'])->name('epsodios.index');
+    Route::post('/temporadas/{temporada}/epsodios/update', [EpsodiosController::class, 'update'])->name('epsodios.update');
+});
+
+
 
 
 Route::get('/series/edit/{id}', [SeriesController::class, 'edit'])->name('series.edit')->whereNumber('id');
@@ -38,9 +49,7 @@ Route::delete('/series/destroy/{id}', [SeriesController::class, 'destroy'])->nam
 Route::resource('/series', SeriesController::class)
 ->only(['index', 'create',  'store', 'update']);
 
-Route::get('/series/{id}/temporadas', [TemporadasController::class, 'index'])
-    ->name('temporadas.index')
-    ->middleware('autenticador');
+
 
 //agrupando as rotas por controlador
 // Route::controller(SeriesController::class)->group(function (){
@@ -56,9 +65,6 @@ Route::get('/series/{id}/temporadas', [TemporadasController::class, 'index'])
 // Route::get('/series', [SeriesController::class, 'index']);
 // Route::get('/series/criar', [SeriesController::class, 'create']);
 // Route::post('/series/salvar', [SeriesController::class, 'store']);
-
-Route::get('/temporadas/{id}/epsodios', [EpsodiosController::class, 'index'])->name('epsodios.index');
-Route::post('/temporadas/{temporada}/epsodios/update', [EpsodiosController::class, 'update'])->name('epsodios.update');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('entrar');
