@@ -36,7 +36,7 @@ class SeriesCreated extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Series Created',
+            subject: "Série $this->nomeSerie criada",
         );
     }
 

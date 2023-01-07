@@ -9,4 +9,3 @@ Acesse aqui:
 </x-mail::button>
 
 </x-mail::message>
-
