@@ -15,6 +15,7 @@ use App\Http\Middleware\Autenticador;
 use App\Repositories\SerieRepository;
 use App\Repositories\ISerieRepository;
 use App\Http\Requests\SerieFormRequest;
+use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
 
 class SeriesController extends Controller
@@ -128,15 +129,23 @@ class SeriesController extends Controller
 
         $serie = $this->serieRepository->add($request);
 
-        $email = new SeriesCreated(
-            $serie->nome,
-            $serie->id,
-            $request->quantTemporadas,
-            $request->epsodios
-        );
+        $listaUsuarios = User::all();
 
-        //$request->user() = pegar o usuário logado
-        Mail::to($request->user())->send($email);
+        foreach ($listaUsuarios as $usuario) {
+
+            $email = new SeriesCreated(
+                $serie->nome,
+                $serie->id,
+                $request->quantTemporadas,
+                $request->epsodios
+            );
+
+            //$request->user() = pegar o usuário logado
+            Mail::to($usuario)->send($email);
+
+            //2 segundos entre cada e-mail para não atingir o limite do mailtrap
+            sleep(2);
+        }
 
         return redirect()->route('series.index')->with('mensagem.sucesso',"Série {$serie->nome} adicionada com sucesso");
     }
