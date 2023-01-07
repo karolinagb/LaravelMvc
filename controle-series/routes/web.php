@@ -8,6 +8,7 @@ use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\EpsodiosController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\TemporadasController;
+use App\Mail\SeriesCreated;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,11 @@ Route::middleware('autenticador')->group(function ()
 
     Route::get('/temporadas/{id}/epsodios', [EpsodiosController::class, 'index'])->name('epsodios.index');
     Route::post('/temporadas/{temporada}/epsodios/update', [EpsodiosController::class, 'update'])->name('epsodios.update');
+
+    //Quando temos uma classe de email, o Laravel já sabe que tem que retornar o html dela
+    Route::get('/email', function (){
+        return new SeriesCreated('Teste', 2, 3, 1);
+    });
 });
 
 
