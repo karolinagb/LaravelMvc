@@ -131,7 +131,7 @@ class SeriesController extends Controller
 
         $listaUsuarios = User::all();
 
-        foreach ($listaUsuarios as $usuario) {
+        foreach ($listaUsuarios as $index => $usuario) {
 
             $email = new SeriesCreated(
                 $serie->nome,
@@ -141,10 +141,17 @@ class SeriesController extends Controller
             );
 
             //$request->user() = pegar o usuário logado
-            Mail::to($usuario)->send($email);
+            // Mail::to($usuario)->queue($email);
+
+            //Aqui estamos definindo para de 2 em 2 segundos processar, isso é para que não exceda
+            //a quantidade de e-mails do mailtrap por 10 segundos.
+            $tempo = now()->addSeconds($index * 2);
+
+            //later atrasa um pouco o processamento de acordo com um tempo especificado
+            Mail::to($usuario)->later($tempo, $email);
 
             //2 segundos entre cada e-mail para não atingir o limite do mailtrap
-            sleep(2);
+            // sleep(2);
         }
 
         return redirect()->route('series.index')->with('mensagem.sucesso',"Série {$serie->nome} adicionada com sucesso");
