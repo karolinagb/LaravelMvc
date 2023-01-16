@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SerieCriada;
 use App\Models\Serie;
 use App\Repositories;
 use App\Models\Epsodio;
@@ -129,30 +130,15 @@ class SeriesController extends Controller
 
         $serie = $this->serieRepository->add($request);
 
-        $listaUsuarios = User::all();
+        //dispatch = envia o evento | recebe por parametro tudo que o evento SerieCriada receberia
+            // ele pega os parametros e passa pra classe de evento
+        SerieCriada::dispatch($serie->nome, $serie->id, $request->quantTemporadas, $request->epsodios);
 
-        foreach ($listaUsuarios as $index => $usuario) {
-
-            $email = new SeriesCreated(
-                $serie->nome,
-                $serie->id,
-                $request->quantTemporadas,
-                $request->epsodios
-            );
-
-            //$request->user() = pegar o usuário logado
-            // Mail::to($usuario)->queue($email);
-
-            //Aqui estamos definindo para de 2 em 2 segundos processar, isso é para que não exceda
-            //a quantidade de e-mails do mailtrap por 10 segundos.
-            $tempo = now()->addSeconds($index * 2);
-
-            //later atrasa um pouco o processamento de acordo com um tempo especificado
-            Mail::to($usuario)->later($tempo, $email);
-
-            //2 segundos entre cada e-mail para não atingir o limite do mailtrap
-            // sleep(2);
-        }
+        //sintaxe alternativa para gerar o evento:
+        // $serieCriadaEvento = new SerieCriada($serie->nome, $serie->id, $request->quantTemporadas, $request->epsodios);
+        //Como o dispatch é um método estático, eu não poderia chamar ele a partir de uma instância, então posso chamar
+        // uma funação auxiliar do laravel que é a event() | isso seria a mesma coisa que chamar o dispatch
+        // event($serieCriadaEvento);
 
         return redirect()->route('series.index')->with('mensagem.sucesso',"Série {$serie->nome} adicionada com sucesso");
     }
