@@ -26,7 +26,13 @@ class SerieFormRequest extends FormRequest
     {
         return [
             //regras de validação
-            'nome' => ['required', 'min:3']
+            'nome' => ['required', 'min:3'],
+            'capa' => [
+                    //pega todos os arquivos de imagem:
+                    "image",
+                    //tipos de arquivo aceito:
+                    "mimes:png,jpg,gif"
+            ]
         ];
     }
 

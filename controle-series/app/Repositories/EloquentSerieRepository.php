@@ -13,7 +13,10 @@ class EloquentSerieRepository implements ISerieRepository
     {
         return DB::transaction(function () use ($request) {
 
-            $serie = Serie::create($request->all());
+            $serie = Serie::create([
+                'nome' => $request->nome,
+                'caminho_capa' => $request->caminhoCapa
+            ]);
 
             $temporadas = [];
 

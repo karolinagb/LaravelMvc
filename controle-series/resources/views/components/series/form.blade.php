@@ -1,4 +1,4 @@
-<form action="{{ $action }}" method="post">
+<form action="{{ $action }}" method="post" enctype="multipart/form-data">
     @csrf
 
     @if($update)
@@ -20,6 +20,13 @@
             <label for="epsodios" class="form-label">Epsódios:</label>
             <input type="text" id=”epsodios” name="epsodios" class="form-control"
             @isset($epsodios)value="{{ $epsodios }}"@endisset>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12">
+            <label for="capa" class="form-label">Capa</label>
+            <input type="file" name="capa" name="capa" class="form-control" accept="image/gif, image/jpeg, image/png">
         </div>
     </div>
 

@@ -12,7 +12,7 @@ class Serie extends Model
     use HasFactory;
 
     //o create ignora tudo que nao esta na propriedade fillable
-    protected $fillable = ['nome']; //campos que permito ser adicionados por atribuição em massa
+    protected $fillable = ['nome', 'caminho_capa']; //campos que permito ser adicionados por atribuição em massa
     // protected $primaryKey = 'id'; -> definir primary key, o padrão já é o campo id
 
     //Sempre que eu buscar series, vai vir as temporadas - eager loading

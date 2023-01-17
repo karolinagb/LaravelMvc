@@ -92,6 +92,21 @@ class SeriesController extends Controller
 
     public function store(SerieFormRequest $request)
     {
+        //store = salva o arquivo no nome de pasta especificado e retorna o caminho q salvou
+        //O caminho que ele salva é o padrão q esta defini em config/filesystems.php
+        //2 parâmetro public = nome do disco que será utilizado, nesse caso estou informando q ele pode
+        //ser salvo em storage/app/public que é uma pasta onde os arquivos ficam acessíveis, se eu quisesse
+        //salvar um relatório q vou manipular e n pode ser acessível, por exemplo, salvo só em app e no caso
+        //ao invés de public seria local, porém o local já está definido como padrão no env
+        //Só que ele não está acessível de fato, se eu acessar no navegador, não consigo abrir a img
+        //porém ele salva nessa pasta pra dizer que os arquivos que estão nela podem ser acessíveis
+        $caminhoCapa =  $request->file("capa")->store('capa_serie', 'public');
+        //storeAs = salva o arquivo na pasta específica e posso passar o nome que quero dar ao arquivo
+        //Se eu não passar o nome, o Laravel cria o nome do arquivo
+        //$request->file("capa")->storeAs('capa_serie', 'nome-capa');
+
+        //adicionando o caminhoCapa no request para salvar no banco
+        $request->caminhoCapa = $caminhoCapa;
 
             //esse método espera algumas regras, se essas não forem satisfeitas o laravel redireciona o usuário de volta para ultima url
             //e adiciona todas as informações do request que não foi válido em uma flash message
@@ -178,7 +193,7 @@ class SeriesController extends Controller
         return view('series.edit')->with('serie', $serie);
     }
 
-    public function update(Serie $serie, SerieFormRequest $request)
+    public function update(Serie $series, SerieFormRequest $request)
     {
         //Poderiamos fazer como abaixo mas quando passamos o id na rota e no parametro do controller passamos
             //o tipo do modelo, o Laravel já busca no banco pra gente
@@ -187,9 +202,9 @@ class SeriesController extends Controller
         // $serie->nome = $request->nome;
         //Se fosse muitos parâmetros podemos usar o fill, pois definimos na model quais campos podem ser atribuidos
             //o fill vai fazer a atribuição em massa de td q vier do request mas definido na model
-        $serie->fill($request->all());
-        $serie->save();
+        $series->fill($request->all());
+        $series->save();
 
-        return redirect()->route('series.index')->with("mensagem.sucesso", "Série '{$serie->nome}' atualizada com sucesso");;
+        return redirect()->route('series.index')->with("mensagem.sucesso", "Série '{$series->nome}' atualizada com sucesso");;
     }
 }
