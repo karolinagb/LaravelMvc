@@ -12,7 +12,7 @@
     <li class="list-group-item d-flex justify-content-between align-items-center">
 
         <div class="d-flex align-items-center">
-            <img src="{{ asset('storage/' . $serie->caminho_capa) }}" width="100" alt="Capa da série"
+            <img src="{{ asset('storage/' . ($serie->caminho_capa ?: 'capa_serie/sem-foto.png')) }}" width="100" alt="Capa da série"
             class="img-thumbnail me-3">
             @auth <a href="{{ route('temporadas.index', $serie->id) }}"> @endauth
                 {{$serie->nome}}
