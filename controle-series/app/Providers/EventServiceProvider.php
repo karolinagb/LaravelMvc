@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\SerieApagada;
 use App\Events\SerieCriada;
 use App\Listeners\EmailUsuariosSobreSerieCriada;
+use App\Listeners\ExclusaoImagemSerieApagada;
 use App\Listeners\LogSerieCriada;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -27,6 +29,10 @@ class EventServiceProvider extends ServiceProvider
         SerieCriada::class => [
             EmailUsuariosSobreSerieCriada::class,
             LogSerieCriada::class
+        ],
+
+        SerieApagada::class => [
+            ExclusaoImagemSerieApagada::class,
         ],
     ];
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SerieApagada;
 use App\Events\SerieCriada;
 use App\Models\Serie;
 use App\Repositories;
@@ -173,6 +174,10 @@ class SeriesController extends Controller
         //adicionar uma mensagem na sessão
         // $request->session()->put("mensagem.sucesso", "Série removida com sucesso");
         // $request->session()->put("mensagem.sucesso", "Série '{$serie->nome}' removida com sucesso");
+
+        if($serie->caminho_capa != null ){
+            SerieApagada::dispatch($serie->caminho_capa);
+        }
 
         //with permite retornar com um dado na flash session
         //assim posso passar minha flash message diretamente aqui
