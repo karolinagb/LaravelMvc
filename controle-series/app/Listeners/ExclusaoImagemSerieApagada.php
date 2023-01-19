@@ -27,6 +27,6 @@ class ExclusaoImagemSerieApagada implements ShouldQueue
      */
     public function handle(SerieApagada $event)
     {
-        Storage::delete($event->caminho_capa);
+        Storage::disk('public')->delete($event->caminho_capa);
     }
 }

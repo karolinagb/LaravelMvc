@@ -56,7 +56,7 @@ class EmailUsuariosSobreSerieCriada implements ShouldQueue
             Mail::to($usuario)->later($tempo, $email);
 
             //2 segundos entre cada e-mail para não atingir o limite do mailtrap
-            // sleep(2);
+            sleep(2);
         }
     }
 }
