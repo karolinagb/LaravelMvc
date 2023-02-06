@@ -101,7 +101,9 @@ class SeriesController extends Controller
         //ao invés de public seria local, porém o local já está definido como padrão no env
         //Só que ele não está acessível de fato, se eu acessar no navegador, não consigo abrir a img
         //porém ele salva nessa pasta pra dizer que os arquivos que estão nela podem ser acessíveis
-        $caminhoCapa =  $request->file("capa")->store('capa_serie', 'public');
+        $caminhoCapa = $request->hasFile('cover')
+            ? $request->file("capa")->store('capa_serie', 'public')
+            : null;
         //storeAs = salva o arquivo na pasta específica e posso passar o nome que quero dar ao arquivo
         //Se eu não passar o nome, o Laravel cria o nome do arquivo
         //$request->file("capa")->storeAs('capa_serie', 'nome-capa');
