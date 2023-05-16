@@ -22,12 +22,10 @@ use Illuminate\Auth\AuthenticationException;
 
 class SeriesController extends Controller
 {
-    private readonly ISerieRepository $serieRepository;
 
     //inversão de dependência = ao invés de depende de algo concreto, dependemos de uma abstração
-    public function __construct(ISerieRepository $serieRepository)
+    public function __construct(private ISerieRepository $serieRepository)
     {
-        $this->serieRepository = $serieRepository;
 
         // Para aplicar um middleware a todos os métodos do controller, posso usar o método middleware
             //except - o middleware não será aplicado para o método index

@@ -22,4 +22,13 @@ class SerieController extends Controller
         return response()
         ->json($this->serieRepository->add($request), 201); //Laravel ja sabe parsear para json, mas a gente coloca isso pra deixar explícito no código
     }
+
+    public function show(int $id)
+    {
+        $serie = Serie::whereId($id)
+            ->with('temporadas.epsodios')
+            ->first();
+        return response()
+            ->json($serie, 200);
+    }
 }
