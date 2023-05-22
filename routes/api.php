@@ -23,3 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/series', [SerieController::class, 'getSeries']);
 Route::post('/series', [SerieController::class, 'store']);
 Route::get('/series/{id}', [SerieController::class, 'show']);
+Route::put('/series/{id}', [SerieController::class, 'update']);
+Route::delete('/series/{id}', [SerieController::class, 'destroy']);

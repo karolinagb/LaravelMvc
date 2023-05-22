@@ -22,10 +22,10 @@ class Autenticador
         //next = o laravel que coordena, o próximo pode ser outro middleware ou a ação do controlador mesmo
         //se eu quiser, posso receber oq vai ser retornado de next e tratar a resposta tb
 
-        if(!Auth::check()){
-            // Se for lançada uma exceção de autenticação, o Laravel redireciona pro login
-            throw new AuthenticationException();
-        }
+        // if(!Auth::check()){
+        //     // Se for lançada uma exceção de autenticação, o Laravel redireciona pro login
+        //     throw new AuthenticationException();
+        // }
 
         return $next($request);
     }

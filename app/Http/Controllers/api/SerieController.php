@@ -31,4 +31,18 @@ class SerieController extends Controller
         return response()
             ->json($serie, 200);
     }
+
+    public function update(int $id, SerieFormRequest $request)
+    {
+        $serie = Serie::find($id);
+        $serie->fill($request->all());
+        $serie->save();
+
+        return response()->json($serie, 200);
+    }
+
+    public function destroy(int $id)
+    {
+        # code...
+    }
 }
