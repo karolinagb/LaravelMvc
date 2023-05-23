@@ -25,11 +25,18 @@ class SerieController extends Controller
 
     public function show(int $id)
     {
-        $serie = Serie::whereId($id)
-            ->with('temporadas.epsodios')
-            ->first();
+        // $serie = Serie::whereId($id)
+        //     ->with('temporadas.epsodios')
+        //     ->first();
 
-        
+        //posso trocar por isso:
+        $serie = Serie::with('temporadas.epsodios')->find($id);
+
+        if($serie ===null)
+        {
+            return response()->json(['message' => 'Série não encontrada'], 404);
+        }
+
         return response()
             ->json($serie, 200);
     }
