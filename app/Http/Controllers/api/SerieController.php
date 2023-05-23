@@ -28,6 +28,8 @@ class SerieController extends Controller
         $serie = Serie::whereId($id)
             ->with('temporadas.epsodios')
             ->first();
+
+        
         return response()
             ->json($serie, 200);
     }
@@ -38,11 +40,20 @@ class SerieController extends Controller
         $serie->fill($request->all());
         $serie->save();
 
+        // retorno de uma resposta que não contenha a série, já que não fizemos um `SELECT`
+        // Serie::where(‘id’, $series)->update($request->all());
+
         return response()->json($serie, 200);
     }
 
     public function destroy(int $id)
     {
-        # code...
+        // $serie = Serie::find($id);
+        // $serie->delete();
+        //Posso simplificar o que está em cima para não ter que procurar a model antes:
+        Serie::destroy($id);
+        // return response()->json(204);
+        //ou
+        return response()->noContent();
     }
 }
