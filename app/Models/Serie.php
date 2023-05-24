@@ -28,6 +28,12 @@ class Serie extends Model
         return $this->hasMany(Temporada::class, foreignKey:'serie_id', localKey: 'id');
     }
 
+    public function epsodios()
+    {
+        //relacionamento atraves, busca os epsodios atraves do relacionamento com temporadas
+        return $this->hasManyThrough(Epsodio::class, Temporada::class);
+    }
+
     //Podemos criar um escopo de busca onde sempre que buscar as series elas virão ordenadas por nome
     //escopos locais = pega as série de uma forma em um escopo específico
     //escopo global = sempre que pegar a série, independente de onde for, o escopo vai ser aplicado

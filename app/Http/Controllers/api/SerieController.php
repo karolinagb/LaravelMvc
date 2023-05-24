@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Models\Serie;
+use App\Models\Temporada;
 use App\Http\Controllers\Controller;
 use App\Repositories\ISerieRepository;
 use App\Http\Requests\SerieFormRequest;
@@ -63,4 +64,17 @@ class SerieController extends Controller
         //ou
         return response()->noContent();
     }
+
+    public function getTemporadas(int $id)
+    {
+        $serie = Temporada::where('serie_id', $id)->get();
+        return $serie;
+    }
+
+    public function getEpsodios(int $id)
+    {
+        $serie = Serie::find($id);
+        return $serie->epsodios;
+    }
+
 }
