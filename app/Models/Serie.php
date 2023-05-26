@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,9 @@ class Serie extends Model
     //o create ignora tudo que nao esta na propriedade fillable
     protected $fillable = ['nome', 'caminho_capa']; //campos que permito ser adicionados por atribuição em massa
     // protected $primaryKey = 'id'; -> definir primary key, o padrão já é o campo id
+
+    //coisas que serão serializadas junto com o objeto Serie
+    protected $appends = ['links'];
 
     //Sempre que eu buscar series, vai vir as temporadas - eager loading
     // protected $with = ['temporadas'];
@@ -52,4 +56,27 @@ class Serie extends Model
     // {
     //     return $queryBuilder->where('active', true);
     // }
+
+    public function links(): Attribute
+    {
+        //pode usar pacote Laravel HateOAS
+        return new Attribute(
+            //tem que retornar algo que vai ser serializado em json, entao vamos retornar um array
+            get: fn () => [
+                [
+                    //rel = relacionamento - self = para a propria classe
+                    'rel' => 'self',
+                    'url' => "/api/series/{$this->id}"
+                ],
+                [
+                    'rel' => 'temporadas',
+                    'url' => "/api/series/{$this->id}/temporadas"
+                ],
+                [
+                    'rel' => 'epsodios',
+                    'url' => "/api/series/{$this->id}/epsodios"
+                ]
+            ]
+        );
+    }
 }

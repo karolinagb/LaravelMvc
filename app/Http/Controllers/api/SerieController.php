@@ -16,12 +16,14 @@ class SerieController extends Controller
     }
     public function getSeries(Request $request)
     {
-        if(!$request->has('nome')) {
-            return Serie::all();
+        $query = Serie::query();
+
+        if($request->has('nome')) {
+            $query->where('nome', $request->nome);
         }
 
         // Alternativa correta! Os métodos where criam uma query, e para buscar os resultados da query precisamos, por exemplo, do método get. O método find é análogo a whereId($id)->first().
-        return Serie::whereNome($request->nome)->get();
+        return $query->paginate(3); //3 => 3 séries por página
     }
 
     public function store(SerieFormRequest $request)
