@@ -59,7 +59,7 @@ class Serie extends Model
 
     public function links(): Attribute
     {
-        //pode usar pacote Laravel HateOAS
+        //pode usar pacote Laravel HateOAS - https://github.com/gdebrauwer/laravel-hateoas
         return new Attribute(
             //tem que retornar algo que vai ser serializado em json, entao vamos retornar um array
             get: fn () => [
