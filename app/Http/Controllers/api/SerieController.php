@@ -7,15 +7,21 @@ use App\Models\Temporada;
 use App\Http\Controllers\Controller;
 use App\Repositories\ISerieRepository;
 use App\Http\Requests\SerieFormRequest;
+use Illuminate\Http\Request;
 
 class SerieController extends Controller
 {
     public function __construct(private ISerieRepository $serieRepository)
     {
     }
-    public function getSeries()
+    public function getSeries(Request $request)
     {
-        return Serie::all();
+        if(!$request->has('nome')) {
+            return Serie::all();
+        }
+
+        // Alternativa correta! Os métodos where criam uma query, e para buscar os resultados da query precisamos, por exemplo, do método get. O método find é análogo a whereId($id)->first().
+        return Serie::whereNome($request->nome)->get();
     }
 
     public function store(SerieFormRequest $request)
